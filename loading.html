@@ -8,52 +8,100 @@
         body {
             margin: 0;
             display: flex;
-            flex-direction: column; /* 요소들을 세로로 정렬 */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #ffffff; /* 배경 흰색 */
-            font-family: 'Arial', sans-serif; /* 적절한 폰트 선택 */
-            color: #000000; /* 텍스트 검은색 */
+            font-family: 'Consolas', 'Monaco', 'Lucida Console', monospace; /* 이미지의 폰트 느낌을 최대한 살리려 노력 */
+            color: #000000; /* 기본 텍스트 색상 검은색 */
             overflow: hidden; /* 스크롤바 방지 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .loading-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 80%; /* 컨테이너 너비 */
-            max-width: 500px; /* 너무 커지지 않도록 최대 너비 설정 */
+            width: 70%; /* 전체 너비의 70% 정도로 설정하여 이미지와 유사한 비례 유지 */
+            max-width: 700px; /* 너무 커지지 않도록 최대 너비 설정 */
+            box-sizing: border-box;
         }
 
         .loading-text {
-            font-size: 3vw; /* 화면 너비에 따라 크기 조절 */
+            font-size: 2.5vw; /* 화면 너비에 따라 크기 조절 */
+            min-font-size: 16px; /* 최소 크기 보장 */
             max-font-size: 24px; /* 너무 커지지 않도록 최대 크기 */
-            font-weight: bold;
-            margin-bottom: 20px;
-            letter-spacing: 0.2em; /* 글자 간격 조절 */
-            opacity: 0; /* 초기에는 투명하게 */
-            animation: fadeIn 1s forwards; /* 서서히 나타나는 애니메이션 */
+            font-weight: normal; /* 이미지 폰트가 아주 굵지 않음 */
+            margin-bottom: 2.5vw; /* 로딩 바와의 간격, 이미지 비례 */
+            letter-spacing: 0.25em; /* 글자 간격 조절, 이미지와 유사하게 */
+            color: #000000; /* 텍스트 검은색 */
+            opacity: 0; /* 초기 투명 */
+            animation: fadeIn 1s forwards; /* 서서히 나타남 */
+            animation-delay: 0.5s; /* 약간의 지연 후 나타남 */
         }
 
-        .progress-bar-outline {
+        .progress-bar-area {
+            display: flex;
+            align-items: center;
             width: 100%;
-            height: 8px; /* 바의 높이 */
-            border: 2px solid #000000; /* 테두리 검은색 */
-            border-radius: 50px;
-            overflow: hidden; /* 내부 바가 테두리 밖으로 나가지 않도록 */
+        }
+
+        .edge-mark {
+            width: 1.5vw; /* 양쪽 끝 바의 너비 */
+            height: 1.5vw; /* 정사각형 모양, 이미지 비례 */
+            min-width: 8px; /* 최소 크기 */
+            min-height: 8px; /* 최소 크기 */
+            background-color: #000000; /* 검은색 */
+            border: 1px solid #000000; /* 테두리도 검은색으로, 이미지 디테일 */
+            box-sizing: border-box;
+            opacity: 0; /* 초기 투명 */
+            animation: fadeIn 1s forwards; /* 서서히 나타남 */
+            animation-delay: 0.7s; /* 로딩 텍스트 다음으로 나타남 */
+        }
+        
+        .left-edge-mark {
+            margin-right: 1.5vw; /* 로딩 바와의 간격 */
+            transform: skewX(-20deg); /* 이미지의 기울어진 직사각형 형태 */
+        }
+
+        .right-edge-mark {
+            margin-left: 1.5vw; /* 로딩 바와의 간격 */
+            transform: skewX(-20deg); /* 이미지의 기울어진 직사각형 형태 */
+        }
+
+        .progress-bar-container {
+            flex-grow: 1; /* 남은 공간을 모두 차지 */
+            height: 1.5vw; /* 바의 높이, 이미지와 유사하게 */
+            min-height: 8px; /* 최소 높이 */
+            border: 2px solid #000000; /* 로딩 바 테두리 검은색 */
             position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+            opacity: 0; /* 초기 투명 */
+            animation: fadeIn 1s forwards; /* 서서히 나타남 */
+            animation-delay: 0.7s; /* 로딩 텍스트 다음으로 나타남 */
         }
 
         .progress-bar-fill {
             height: 100%;
             width: 0%; /* 초기 너비 0 */
             background-color: #000000; /* 채우기 검은색 */
-            border-radius: 50px;
-            animation: loadProgress 3s forwards; /* 로딩 애니메이션 */
-            /* 애니메이션 지연 시간을 message.js의 전환 시간과 맞춰 조절할 수 있습니다. */
-            /* 예: message.js의 7초 전환 시간 동안 로딩바가 움직이도록 */
-            animation-delay: 0.5s; /* 텍스트 나타난 후 약간의 지연 후 시작 */
+            animation: loadProgress 15s forwards linear; /* 아주 천천히 (15초) 선형적으로 채움 */
+            /* message.js의 7초 전환 시간과는 별개로 로딩 애니메이션 자체의 길이 */
+        }
+        
+        /* 이미지의 내부 로딩 바 위의 작은 흰색 라인 (여기서는 검은색으로 반전) */
+        .progress-bar-line {
+            position: absolute;
+            top: calc(50% - 0.5px); /* 바 중앙에 위치 */
+            left: 0;
+            width: 100%;
+            height: 1px; /* 매우 얇은 라인 */
+            background-color: #000000; /* 검은색 라인 */
+            z-index: 1; /* 채워지는 바 위에 오도록 */
+            opacity: 0.7; /* 약간 투명하게, 이미지와 유사 */
         }
 
         /* 애니메이션 정의 */
@@ -67,10 +115,38 @@
             to { width: 100%; }
         }
 
-        /* 미디어 쿼리: 작은 화면에서의 글자 크기 조정 */
-        @media (max-width: 600px) {
+        /* 반응형 디자인: 작은 화면에서 글자 및 요소 크기 조정 */
+        @media (max-width: 768px) {
             .loading-text {
-                font-size: 5vw; /* 작은 화면에서 글자 크기 조금 더 키움 */
+                font-size: 4vw;
+                margin-bottom: 5vw;
+            }
+            .edge-mark,
+            .progress-bar-container {
+                height: 10px; /* 작은 화면에서 최소 높이 고정 */
+            }
+            .left-edge-mark,
+            .right-edge-mark {
+                width: 10px; /* 작은 화면에서 최소 너비 고정 */
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loading-text {
+                font-size: 5vw;
+                letter-spacing: 0.2em;
+            }
+            .edge-mark,
+            .progress-bar-container {
+                height: 8px;
+            }
+            .left-edge-mark,
+            .right-edge-mark {
+                width: 8px;
+                margin-right: 8px;
+                margin-left: 8px;
             }
         }
     </style>
@@ -78,25 +154,13 @@
 <body>
     <div class="loading-container">
         <div class="loading-text">LOADING</div>
-        <div class="progress-bar-outline">
-            <div class="progress-bar-fill"></div>
+        <div class="progress-bar-area">
+            <div class="edge-mark left-edge-mark"></div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill"></div>
+                <div class="progress-bar-line"></div> </div>
+            <div class="edge-mark right-edge-mark"></div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const progressBarFill = document.querySelector('.progress-bar-fill');
-            const loadingDuration = 3000; // progress-bar-fill 애니메이션 시간 (3초) + delay (0.5초)
-            const totalLoadingAnimationTime = loadingDuration + 500; // 총 애니메이션 시간
-
-            // 로딩 애니메이션 완료 후 다음 페이지로 이동 (예시: next_page.html)
-            // 이 부분은 필요하다면 추가하고, 어떤 페이지로 이동할지는 상황에 따라 변경하세요.
-            // 현재는 message.js에서 loading.html로 오기만 하고, loading.html에서 다음 페이지로 넘어가는 로직은 없습니다.
-            // 만약 loading.html이 단순히 중간 로딩 화면이고 다음 페이지로 자동 전환되어야 한다면 이 스크립트를 사용합니다.
-            // setTimeout(() => {
-            //     window.location.href = '다음_페이지.html'; // 예시: 'result.html' 등
-            // }, totalLoadingAnimationTime);
-        });
-    </script>
 </body>
 </html>
