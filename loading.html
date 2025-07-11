@@ -5,101 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading</title>
     <style>
-        @font-face {
-            font-family: 'Digital-Like'; /* 이미지와 유사한 느낌을 위해 폰트 이름 정의 */
-            /* 실제 폰트 파일을 포함하거나, 유사한 시스템 폰트 사용을 권장합니다.
-               정확한 폰트가 없다면, monospace 계열 폰트가 가장 유사할 수 있습니다. */
-            src: local('Consolas'), local('Monaco'), local('Lucida Console'), local('Courier New'), monospace;
-            /* 위 폰트들은 시스템에 일반적으로 설치되어 있는 모노스페이스 폰트입니다.
-               더 정확한 폰트를 원하시면 해당 폰트 파일을 웹에 업로드하여 @font-face rule에 연결해야 합니다. */
-        }
-
+        /* 이미지와 유사한 디지털/모노스페이스 폰트 사용 시도 */
+        /* 시스템에 설치된 폰트 중 이미지와 가장 유사한 폰트를 선택합니다. */
+        /* 만약 특정 폰트(예: "Digital-7", "Segment14")를 사용하려면 해당 폰트 파일을 웹에 포함해야 합니다. */
+        /* 여기서는 시스템 기본 폰트 중 디지털 느낌이 나는 것을 우선합니다. */
         body {
             margin: 0;
             display: flex;
+            flex-direction: column; /* 텍스트와 바를 세로로 정렬 */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: white; /* Inverted: Originally black, now white */
-            font-family: 'Digital-Like', Arial, sans-serif; /* 이미지와 유사한 폰트 적용 */
-            overflow: hidden;
+            background-color: white; /* 흰색 배경 */
+            /* 이미지와 가장 유사한 디지털 느낌의 모노스페이스 폰트 시도 */
+            /* 시스템에 없을 경우를 대비하여 fallback 폰트 추가 */
+            font-family: 'Courier New', 'Lucida Console', 'Monaco', monospace;
+            overflow: hidden; /* 스크롤바 방지 */
         }
 
         .loading-container {
             text-align: center;
-            width: 80%; /* 화면의 80%를 차지하도록 넓게 설정 */
-            max-width: 900px; /* 너무 커지지 않도록 최대 너비 설정 */
+            /* 화면 너비의 거의 꽉 채우도록 설정 (여백 고려) */
+            width: 90vw; /* viewport width의 90% */
+            max-width: 1000px; /* 너무 커지지 않도록 최대 너비 설정 */
+            padding: 20px; /* 컨테이너 자체에 약간의 패딩 */
+            box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
         }
 
         .loading-text {
-            color: black; /* Inverted: Originally white, now black */
-            font-size: 2.5em; /* 글씨 크기 조정 */
-            margin-bottom: 30px; /* 텍스트와 바 사이 간격 */
-            letter-spacing: 5px; /* 글자 간격 조정 */
+            color: black; /* 검은색 글씨 */
+            font-size: clamp(2em, 5vw, 4em); /* 화면 크기에 따라 글씨 크기 조절 (반응형) */
+            margin-bottom: 5vh; /* 텍스트와 로딩 바 사이의 간격 (화면 높이의 5%) */
+            letter-spacing: 0.2em; /* 글자 간격 조정 */
             text-transform: uppercase;
-            font-weight: bold; /* 글씨 굵기 강조 */
+            font-weight: bold; /* 이미지의 글씨가 더 굵어 보입니다. */
         }
 
-        .loading-bar-wrapper {
-            width: 100%; /* 컨테이너 너비에 맞춤 */
-            height: 40px; /* 바의 높이를 더 높게 설정 */
-            border: 3px solid black; /* Inverted: Originally white, now black, 선 굵기 증가 */
+        .loading-bar-outer {
+            width: 100%; /* 컨테이너 너비에 꽉 채움 */
+            height: 50px; /* 로딩 바의 전체 높이, 이미지와 유사하게 키움 */
+            border: 4px solid black; /* 이미지의 선 굵기에 맞춤, 색상 반전 */
             position: relative;
-            box-sizing: border-box;
             display: flex;
             align-items: center;
-            padding: 0 10px; /* 내부 여백 조정 */
+            box-sizing: border-box; /* 패딩/보더가 너비에 포함되도록 */
+            padding: 0 20px; /* 내부 로딩 바와 테두리 사이 여백 */
         }
 
-        .loading-bar {
-            width: 0%;
-            height: 15px; /* 내부 로딩 바의 높이 조정 */
-            background-color: black; /* Inverted: Originally white, now black */
-            position: relative;
-            box-sizing: border-box;
-            animation: fillBar 30s linear infinite; /* 매우 천천히 */
-        }
-
-        /* 바 양쪽 끝의 단순한 선 (이미지와 동일하게) */
-        .loading-bar-wrapper::before,
-        .loading-bar-wrapper::after {
+        /* 로딩 바 양쪽 끝의 깔끔한 한 줄 선 */
+        .loading-bar-outer::before,
+        .loading-bar-outer::after {
             content: '';
             position: absolute;
-            width: 3px; /* 선의 너비 */
+            width: 5px; /* 선의 굵기 */
             height: 100%; /* 바의 높이와 동일 */
             background-color: black; /* 선의 색상 */
             top: 0;
             box-sizing: border-box;
         }
 
-        .loading-bar-wrapper::before {
-            left: -15px; /* 바 왼쪽에 위치 */
+        .loading-bar-outer::before {
+            left: -15px; /* 바깥 테두리에서 약간 떨어져 위치 */
         }
 
-        .loading-bar-wrapper::after {
-            right: -15px; /* 바 오른쪽에 위치 */
+        .loading-bar-outer::after {
+            right: -15px; /* 바깥 테두리에서 약간 떨어져 위치 */
         }
 
-        /* 이미지를 보면 바깥쪽 테두리 양 끝에 아주 작은 네모 같은 형태가 보입니다.
-           이 부분을 구현하기 위한 추가 요소입니다. */
-        .loading-bar-wrapper .end-cap {
-            position: absolute;
-            width: 10px; /* 네모의 너비 */
-            height: 10px; /* 네모의 높이 */
-            border: 2px solid black; /* Inverted: Originally white, now black */
+        .loading-bar-inner {
+            width: 0%; /* 애니메이션으로 채워질 부분 */
+            height: 20px; /* 내부 로딩 바의 높이, 이미지와 유사하게 키움 */
+            background-color: black; /* 내부 바 색상, 색상 반전 */
+            animation: fillBar 60s linear infinite; /* 매우 천천히 (60초) */
             box-sizing: border-box;
-            top: 50%;
-            transform: translateY(-50%);
         }
-
-        .loading-bar-wrapper .end-cap.left {
-            left: -25px; /* 선의 바깥쪽에 위치 */
-        }
-
-        .loading-bar-wrapper .end-cap.right {
-            right: -25px; /* 선의 바깥쪽에 위치 */
-        }
-
 
         @keyframes fillBar {
             0% { width: 0%; }
@@ -110,10 +89,8 @@
 <body>
     <div class="loading-container">
         <div class="loading-text">LOADING...</div>
-        <div class="loading-bar-wrapper">
-            <div class="loading-bar"></div>
-            <div class="end-cap left"></div>
-            <div class="end-cap right"></div>
+        <div class="loading-bar-outer">
+            <div class="loading-bar-inner"></div>
         </div>
     </div>
 </body>
