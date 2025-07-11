@@ -13,7 +13,7 @@
             align-items: center;
             height: 100vh;
             background-color: #ffffff; /* 배경 흰색 */
-            font-family: 'Consolas', 'Monaco', 'Lucida Console', monospace; /* 이미지의 폰트 느낌을 최대한 살리려 노력 */
+            font-family: 'Arial', sans-serif; /* 이미지의 폰트 느낌을 최대한 살리려 노력, 일반 고딕체에 가까움 */
             color: #000000; /* 기본 텍스트 색상 검은색 */
             overflow: hidden; /* 스크롤바 방지 */
             -webkit-font-smoothing: antialiased;
@@ -46,35 +46,48 @@
             display: flex;
             align-items: center;
             width: 100%;
+            height: 1.5vw; /* 전체 로딩 바 영역의 높이 */
+            min-height: 10px; /* 최소 높이 보장 */
         }
 
         .edge-mark {
             width: 1.5vw; /* 양쪽 끝 바의 너비 */
-            height: 1.5vw; /* 정사각형 모양, 이미지 비례 */
+            height: 100%; /* 부모 .progress-bar-area의 높이를 따름 */
             min-width: 8px; /* 최소 크기 */
-            min-height: 8px; /* 최소 크기 */
             background-color: #000000; /* 검은색 */
             border: 1px solid #000000; /* 테두리도 검은색으로, 이미지 디테일 */
             box-sizing: border-box;
             opacity: 0; /* 초기 투명 */
             animation: fadeIn 1s forwards; /* 서서히 나타남 */
             animation-delay: 0.7s; /* 로딩 텍스트 다음으로 나타남 */
+            position: relative; /* 의사 요소를 위한 position */
         }
         
+        /* 이미지의 양 끝 바 내부의 작은 사각형 디테일 (정사각형 느낌) */
+        .edge-mark::before {
+            content: '';
+            position: absolute;
+            width: 50%; /* 내부 사각형 크기 */
+            height: 50%; /* 내부 사각형 크기 */
+            background-color: #000000; /* 검은색 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 중앙 정렬 */
+            border: 1px solid #000000; /* 테두리도 검은색 */
+            box-sizing: border-box;
+        }
+
         .left-edge-mark {
             margin-right: 1.5vw; /* 로딩 바와의 간격 */
-            transform: skewX(-20deg); /* 이미지의 기울어진 직사각형 형태 */
         }
 
         .right-edge-mark {
             margin-left: 1.5vw; /* 로딩 바와의 간격 */
-            transform: skewX(-20deg); /* 이미지의 기울어진 직사각형 형태 */
         }
 
         .progress-bar-container {
             flex-grow: 1; /* 남은 공간을 모두 차지 */
-            height: 1.5vw; /* 바의 높이, 이미지와 유사하게 */
-            min-height: 8px; /* 최소 높이 */
+            height: 100%; /* 부모 .progress-bar-area의 높이를 따름 */
             border: 2px solid #000000; /* 로딩 바 테두리 검은색 */
             position: relative;
             overflow: hidden;
@@ -88,11 +101,11 @@
             height: 100%;
             width: 0%; /* 초기 너비 0 */
             background-color: #000000; /* 채우기 검은색 */
-            animation: loadProgress 15s forwards linear; /* 아주 천천히 (15초) 선형적으로 채움 */
+            animation: loadProgress 25s forwards linear; /* 아주 매우 천천히 (25초) 선형적으로 채움 */
             /* message.js의 7초 전환 시간과는 별개로 로딩 애니메이션 자체의 길이 */
         }
         
-        /* 이미지의 내부 로딩 바 위의 작은 흰색 라인 (여기서는 검은색으로 반전) */
+        /* 이미지의 내부 로딩 바 위의 얇은 라인 (흰색 배경에 검은색으로 반전) */
         .progress-bar-line {
             position: absolute;
             top: calc(50% - 0.5px); /* 바 중앙에 위치 */
@@ -101,7 +114,7 @@
             height: 1px; /* 매우 얇은 라인 */
             background-color: #000000; /* 검은색 라인 */
             z-index: 1; /* 채워지는 바 위에 오도록 */
-            opacity: 0.7; /* 약간 투명하게, 이미지와 유사 */
+            opacity: 0.5; /* 이미지의 흰색 라인처럼 살짝 투명하게 */
         }
 
         /* 애니메이션 정의 */
@@ -121,13 +134,11 @@
                 font-size: 4vw;
                 margin-bottom: 5vw;
             }
-            .edge-mark,
-            .progress-bar-container {
-                height: 10px; /* 작은 화면에서 최소 높이 고정 */
+            .progress-bar-area {
+                height: 10px; /* 작은 화면에서 높이 고정 */
             }
-            .left-edge-mark,
-            .right-edge-mark {
-                width: 10px; /* 작은 화면에서 최소 너비 고정 */
+            .edge-mark {
+                width: 10px; /* 작은 화면에서 너비 고정 */
                 margin-right: 10px;
                 margin-left: 10px;
             }
@@ -138,12 +149,10 @@
                 font-size: 5vw;
                 letter-spacing: 0.2em;
             }
-            .edge-mark,
-            .progress-bar-container {
+            .progress-bar-area {
                 height: 8px;
             }
-            .left-edge-mark,
-            .right-edge-mark {
+            .edge-mark {
                 width: 8px;
                 margin-right: 8px;
                 margin-left: 8px;
