@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentInputState = 0; // 0: 첫 번째 문장 ('노래'), 1: 두 번째 문장 ('가수'), 2: 일반 입력
 
     const defaultInputMessage = "메시지를 입력하세요..."; // 기본 입력창 문구 정의
-    const messageInterval = 1500; // 모든 자동 메시지 사이의 간격 (1.5초)
+    const messageInterval = 2000; // 모든 자동 메시지 사이의 간격 (1.5초)
     const transitionDelayAfterLastMessage = 7000; // 마지막 자동 메시지 후 화면 전환까지의 시간 (7초)
 
     // 메시지를 채팅창에 추가하는 헬퍼 함수
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addMessageToChat(messageText, 'right', 'blue');
 
             if (currentInputState === 0) {
-                inputBar.innerHTML = '<span contenteditable="true" class="editable-text">가수</span>?이 부른 거였는데..';
+                inputBar.innerHTML = '<span contenteditable="true" class="editable-text"> 가수 </span>?이 부른 거였는데..';
                 currentInputState = 1;
             } else if (currentInputState === 1) {
                 inputBar.innerHTML = `<span contenteditable="true" class="editable-text">${defaultInputMessage}</span>`;
