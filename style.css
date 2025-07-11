@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+body {
+    margin: 0;
+    display: flex; /* 컨테이너를 중앙 정렬하기 위해 유지 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    min-height: 100vh; /* 뷰포트 높이 전체를 사용 */
+    background-color: transparent; /* 배경색 제거 (또는 white, 원하는 색상) */
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* 추가: 스크롤 방지 및 최소 너비 설정 */
+    min-width: 320px;
+    overflow-x: hidden;
+}
+
+body.page-transition-up {
+    transform: translateY(100vh); /* 초기에는 화면 아래에 위치 */
+    transition: transform 0.5s ease-out; /* 0.5초 동안 부드럽게 이동 */
+}
+
+body.page-transition-up.active {
+    transform: translateY(0); /* 활성화되면 원래 위치로 */
+}
+
+.container {
+    width: 100vw; /* 뷰포트 너비 전체를 차지 */
+    height: 100vh; /* 뷰포트 높이 전체를 차지 */
+    
+    /* 기존 background-color를 이미지로 대체 */
+    background-image: url("../images/IMG_1336.jpg");  /* 여기에 이미지 파일 경로를 넣어주세요. */
+    background-size: cover; /* 이미지가 화면을 꽉 채우도록 조절 (비율 유지) */
+    background-position: center; /* 이미지를 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지 반복 없음 */
+    
+    border-radius: 0; /* 화면 전체를 덮으므로 모서리 둥글게 제거 */
+    box-shadow: none; /* 화면 전체를 덮으므로 그림자 제거 */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내부 콘텐츠를 가로 중앙 정렬 */
+    padding: 5vw 4vw; /* 패딩은 뷰포트 너비에 비례하게 유지 */
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; /* 컨테이너를 벗어나는 내용 숨김 */
+}
+
+/* 아래는 이전 대화에서 조절되었던 반응형 속성들이므로 유지됩니다. */
+
+.date-time {
+    text-align: center;
+    margin-bottom: 4vw;
+    margin-top: 5vw;
+}
+
+.date {
+    font-size: 3.5vw; /* 글씨 크기 건드리지 않음 */
+    max-font-size: 16px; /* 글씨 크기 건드리지 않음 */
+    color: #666; /* 색상 건드리지 않음 */
+    margin-bottom: 1vw; /* 마진 건드리지 않음 */
+    
+    /* 이 부분만 변경합니다: 폰트 패밀리만 나눔고딕으로 지정 */
+    font-family: "Nanum Gothic", sans-serif; 
+    font-weight: 400; /* 나눔고딕 Regular의 기본 두께 (400) */
+    font-style: normal; /* 스타일도 기본 (normal) */
+}
+
+.time {
+    font-size: 7vw;
+    max-font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-top: -1.5vw;
+
+    font-family: "Noto Serif KR", serif; /* 여기에 원하는 폰트 이름을 입력하세요. */
+    font-weight: 800; /* Noto Serif KR에서 불러온 두께 800 (ExtraBold) 적용 */
+    font-style: normal; /* 기본 스타일 */
+}
+
+.music-player {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    padding: 2.5vw;
+    width: 98%; /* 컨테이너 너비의 90% (이제 컨테이너가 100vw이므로 상대적으로 커짐) */
+    max-width: 500px; /* 너무 커지는 것을 방지 (이전 320px에서 약간 늘림) */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3vw;
+}
+
+.album-art-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 3vw;
+}
+
+.album-art {
+    width: 13vw;
+    height: 13vw;
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 3vw;
+    background-color: #e0e0e0;
+}
+
+.album-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.song-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.song-title {
+    font-size: 3.5vw;
+    max-font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0.5vw;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Nanum Gothic", sans-serif; 
+    font-weight: 400; /* 나눔고딕 Regular의 기본 두께 (400) */
+    font-style: normal; /* 스타일도 기본 (normal) */
+}
+
+.artist {
+    font-size: 3vw;
+    max-font-size: 13px;
+    color: #666;
+    font-family: "Nanum Gothic", sans-serif; 
+    font-weight: 400; /* 나눔고딕 Regular의 기본 두께 (400) */
+    font-style: normal; /* 스타일도 기본 (normal) */
+}
+
+.progress-section {
+    display: flex; /* Flexbox 활성화 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%; /* music-player의 전체 너비를 차지 */
+    justify-content: space-between; /* 양 끝 정렬 */
+    
+    /* 기존 .time-stamps의 margin-bottom을 이쪽으로 옮겨 간격 조절 */
+    margin-bottom: 2vw; 
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 3px;
+    background-color: #e6e6e6;
+    border-radius: 50px;
+    overflow: hidden;
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    margin: 0 1.5vw; /* 노래 시간 텍스트와의 좌우 간격 추가 */
+}
+
+.current-time,
+.total-time {
+    font-size: 2.5vw;
+    max-font-size: 11px;
+    color: #999;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.progress-bar {
+    width: 25%;
+    height: 100%;
+    background-color: #888;
+    border-radius: 50px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    margin-bottom: 2vw;
+}
+
+.controls i {
+    color: #666;
+    cursor: pointer;
+    padding: 0.3vw;
+    font-size: 5vw;
+    max-font-size: 24px;
+}
+
+.controls .fa-pause {
+    font-size: 7vw;
+    max-font-size: 32px;
+    color: #444;
+}
+
+.volume-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 1vw;
+}
+
+.volume-bar-container i {
+    color: #999;
+    font-size: 4vw;
+    max-font-size: 16px;
+    margin: 0 2vw;
+}
+
+.volume-bar {
+    flex-grow: 1;
+    height: 3px;
+    background-color: #e6e6e6;
+    border-radius: 50px;
+    position: relative;
+}
+
+.volume-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background-color: #888;
+    border-radius: 50px;
+}
+
+.message-notification {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    padding: 2.5vw;
+    width: 100%;
+    max-width: 518px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.message-content {
+    display: flex; /* 아이콘과 텍스트 내용을 가로로 배치 */
+    align-items: center; /* 아이콘과 텍스트를 세로 중앙 정렬 */
+    width: 100%; /* 전체 너비를 차지 */
+}
+
+.message-content .message-icon-image {
+    width: 6vw; /* 아이콘 크기 조절 */
+    height: 6vw; /* 아이콘 크기 조절 (width와 동일하게 정사각형 유지) */
+    min-width: 30px; /* 작은 화면에서 최소 크기 보장 */
+    min-height: 30px; /* 작은 화면에서 최소 크기 보장 */
+    margin-right: 3vw; /* 텍스트 내용과의 간격 유지 */
+    border-radius: 15%; /* 이미지 모서리 둥글게 (앨범 아트와 유사하게) */
+    overflow: hidden; /* 이미지가 border-radius에 맞춰 잘리도록 */
+    background-color: #f0f0f0; /* 이미지 로딩 실패 시 배경색 (선택 사항) */
+    display: flex; /* 이미지를 가운데 정렬하기 위해 (선택 사항) */
+    align-items: center; /* 이미지를 가운데 정렬하기 위해 (선택 사항) */
+    justify-content: center; /* 이미지를 가운데 정렬하기 위해 (선택 사항) */
+}
+
+.message-content .message-icon-image img {
+    display: block; /* 이미지 주변 여백 제거 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 컨테이너에 맞춰 비율 유지하며 채우도록 */
+}
+
+.main-text-area {
+    display: flex;
+    flex-direction: column; /* '메시지/지금' 줄과 '전화번호'를 세로로 배치 */
+    flex-grow: 1; /* 남은 공간을 모두 차지하여 '지금'을 오른쪽 끝으로 밀어냅니다. */
+}
+
+.message-top-line {
+    display: flex;
+    justify-content: space-between; /* '메시지'와 '지금'을 양 끝으로 정렬 */
+    width: 100%; /* .main-text-area의 전체 너비를 차지 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-bottom: 0.5vw; /* '메시지/지금' 줄과 '전화번호' 사이 간격 */
+}
+
+.message-label {
+    font-size: 3.5vw; /* 크기 유지 */
+    max-font-size: 14px;
+    font-weight: 500;
+    color: #333; /* 색상 유지 */
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column; /* 전화번호와 라벨을 세로로 배치 */
+    align-items: flex-start; /* 텍스트를 왼쪽으로 정렬 */
+    flex-grow: 1; /* 남은 공간을 차지하도록 */
+}
+
+.phone-number {
+    font-size: 4vw;
+    max-font-size: 16px;
+    color: #333;
+    font-weight: 400;
+    margin-bottom: 0.5vw;
+}
+
+.message-label {
+    font-size: 3.2vw; /* '메시지' 라벨 크기 (전화번호보다 작게) */
+    max-font-size: 13px;
+    font-weight: 500;
+    color: #666; /* 색상을 이미지에 맞춰 조절 */
+}
+
+/* --- 미디어 쿼리 (특정 화면 크기 이상에서의 스타일 조정) --- */
+/* 태블릿 또는 작은 데스크톱 화면 (예: 600px 이상) */
+@media (min-width: 600px) {
+    /* .container는 이미 뷰포트 100%로 설정되었으므로 이 미디어 쿼리에서는 다시 고정하지 않습니다. */
+    /* 다만, 내부 콘텐츠가 너무 커지지 않도록 music-player 등의 max-width는 유지됩니다. */
+
+    .date-time {
+        margin-bottom: 25px;
+        margin-top: 30px;
+    }
+
+    .date {
+        font-size: 16px;
+        margin-bottom: 0px;
+    }
+    
+    .music-player {
+        padding: 10px;
+        max-width: 500px; /* 이전에 320px이었으나 container가 커졌으니 조절 */
+        margin-bottom: 15px;
+    }
+    .album-art-info {
+        margin-bottom: 15px;
+    }
+    .album-art {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+    }
+    .song-title {
+        font-size: 15px;
+    }
+    .artist {
+        font-size: 13px;
+    }
+    .progress-section {
+        margin-bottom: 10px; /* 기존 .time-stamps의 margin-bottom을 이쪽으로 옮김 */
+    }
+    .progress-bar-container {
+        margin: 0 15px; /* 노래 시간 텍스트와의 좌우 간격 (15px) */
+    }
+    .current-time,
+    .total-time {
+        font-size: 11px;
+    }
+    .controls {
+        margin-bottom: 10px;
+    }
+    .controls i {
+        font-size: 24px;
+        padding: 1px;
+    }
+    .controls .fa-pause {
+        font-size: 32px;
+    }
+    .volume-bar-container {
+        padding: 0 5px;
+    }
+    .volume-bar-container i {
+        font-size: 16px;
+        margin: 0 8px;
+    }
+    .message-notification {
+        padding: 15px;
+        max-width: 518px;
+    }
+    .message-content .message-icon-image {
+        width: 30px; /* 고정 크기 */
+        height: 30px; /* 고정 크기 */
+        margin-right: 15px; /* 고정 간격 */
+        border-radius: 15%; /* 유지 또는 필요에 따라 조절 */
+    }
+    .message-time {
+        font-size: 12px;
+    }
+    .message-top-line {
+        margin-bottom: 3px; /* 조정 가능 */
+    }
+    .phone-number {
+        font-size: 16px;
+    }
+    .message-label {
+        font-size: 14px;
+    }
+}
