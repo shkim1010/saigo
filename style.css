@@ -30,7 +30,7 @@ body.page-transition-up.active {
     height: 100vh; /* 뷰포트 높이 전체를 차지 */
     
     /* 기존 background-color를 이미지로 대체 */
-    background-image: url("../images/IMG_1336.jpg");  /* 여기에 이미지 파일 경로를 넣어주세요. */
+    background-image: url("../image/IMG_1336 (1).jpg");  /* 여기에 이미지 파일 경로를 넣어주세요. */
     background-size: cover; /* 이미지가 화면을 꽉 채우도록 조절 (비율 유지) */
     background-position: center; /* 이미지를 중앙에 배치 */
     background-repeat: no-repeat; /* 이미지 반복 없음 */
