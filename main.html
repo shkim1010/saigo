@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMessage Clone</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="header-center">
+                <div class="profile-pic">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="username">Eau de Pico</div>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-video"></i>
+            </div>
+        </header>
+
+        <div class="chat-area">
+            <div class="message-date-time">7월 18일 (금) 03:18</div>
+
+            <div class="message-row right">
+                <div class="message-bubble blue">
+                    뭐해?? 진짜 오랜만이다
+                </div>
+            </div>
+
+            <div class="message-date-time">7월 18일 (금) 13:18</div>
+
+            <div class="message-row left">
+                <div class="message-bubble gray">
+                    그러게 진짜 오랜만이네
+                </div>
+            </div>
+            <div class="message-row left">
+                <div class="message-bubble gray">
+                    나 그냥 폰하지!
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="plus-icon-container">
+                <i class="fas fa-plus-circle"></i> 
+            </div>
+            <div class="input-bar">
+                아 혹시 저번에 너네 집에서 <span contenteditable="true" class="editable-text">노래</span> 들었을 때 났던 향 기억나?
+            </div>
+            <div class="mic-icon-container"> <i class="fas fa-microphone"></i> </div>
+            <div class="send-button"> <i class="fas fa-paper-plane"></i> </div>
+        </div>
+    </div>
+
+    <script src="message.js"></script>
+</body>
+</html>
