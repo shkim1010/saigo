@@ -1,0 +1,213 @@
+body {
+    margin: 0;
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #ffffff; /* 전체 배경 흰색 유지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 뷰포트 높이 꽉 채움 */
+    width: 100vw; /* 뷰포트 너비 꽉 채움 */
+    overflow: hidden; /* 스크롤바 방지 */
+}
+
+.container {
+    width: 100vw; /* 웹사이트 화면 전체 너비 꽉 채움 */
+    height: 100vh; /* 웹사이트 화면 전체 높이 꽉 채움 */
+    max-width: none; /* 이전 max-width 제한 해제 */
+    max-height: none; /* 이전 max-height 제한 해제 */
+    
+    background-color: #fff; /* 컨테이너 배경도 흰색 */
+    display: flex;
+    flex-direction: column;
+    box-shadow: none; /* 화면 꽉 채우므로 그림자 제거 */
+    border-radius: 0; /* 화면 꽉 채우므로 둥근 모서리 제거 */
+    overflow: hidden; /* 내부 요소 넘침 방지 */
+}
+
+/* 1. 상단 헤더 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.header-left {
+    justify-content: flex-start;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+.header-left .fa-chevron-left,
+.header-right .fa-video {
+    font-size: 24px;
+    color: #007aff;
+}
+
+.header-center {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-pic {
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.username {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 2. 메시지 영역 */
+.chat-area {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #ffffff;
+}
+
+.message-date-time {
+    text-align: center;
+    font-size: 12px;
+    color: #8e8e93;
+    margin: 10px 0;
+}
+
+.message-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.message-row.right {
+    justify-content: flex-end;
+}
+
+.message-row.left {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 70%;
+    font-size: 15px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.message-bubble.blue {
+    background-color: #007aff;
+    color: #fff;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 5px; 
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.message-bubble.gray {
+    background-color: #e5e5ea;
+    color: #333;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 5px; 
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+/* 3. 하단 바 */
+.bottom-bar {
+    display: flex;
+    align-items: flex-end;
+    padding: 8px 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+}
+
+.plus-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #8e8e93;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px; /* 입력 바와의 간격 유지 */
+}
+
+.input-bar {
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 8px 15px;
+    /* margin: 0 8px; 이전에 좌우 간격을 줬지만, 이제 마이크와 전송 버튼과 붙이므로 조정 */
+    margin-right: 8px; /* 마이크 아이콘과의 간격 */
+    font-size: 15px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.editable-text {
+    display: inline;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin: 0;
+    color: #333;
+    outline: none;
+    min-width: 20px;
+}
+
+/* 마이크 아이콘 컨테이너 스타일 */
+.mic-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #8e8e93; /* 마이크 아이콘 색상 유지 */
+    width: 30px;
+    height: 30px;
+    margin-right: 8px; /* 전송 버튼과의 간격 */
+}
+
+/* 전송 버튼 스타일 */
+.send-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px; /* 버튼의 너비 */
+    height: 30px; /* 버튼의 높이 */
+    border-radius: 50%; /* 원형 버튼 */
+    background-color: #007aff; /* 파란색 배경 */
+    color: #fff; /* 흰색 아이콘 */
+    font-size: 18px; /* 종이비행기 아이콘 크기 */
+    cursor: pointer;
+    flex-shrink: 0; /* 공간이 부족해도 줄어들지 않도록 */
+}
